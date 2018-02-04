@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.Model;
+﻿using System.Web.Http;
+using calculatorRestAPI.Models.DTOs;
 using calculatorRestAPI.Services;
-using calculatorRestAPI.Services.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace calculatorRestAPI.Controllers
 {
     public class CalculatorProfileController : ApiController
     {
         // GET api/calculatorprofile
-        public IEnumerable<string> Get( string userName )
+        public string Get( string userName )
         {
-            CalculatorDTO result = Service.getService().getCalculatorData(userName);
-            return new string[] { result.UserName, result.Operator, result.Result };
+           CalculatorDTO result = Service.getService().getCalculatorData(userName);
+            return JsonConvert.SerializeObject(result);
+        }
+
+        // PUT api/calculatorprofile
+        public void Put( string userName, [FromBody]string jsonData)
+        {
+            JObject JsonData = JObject.Parse(jsonData);
+            CalculatorDTO data = JsonData.ToObject<CalculatorDTO>();
+            data.UserID = userName;
+            Service.getService().saveCalculatorData(data );
         }
     }
 }
