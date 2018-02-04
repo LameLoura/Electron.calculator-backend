@@ -488,11 +488,10 @@
             <param name="userName"></param>
             <returns></returns>
         </member>
-        <member name="M:calculatorRestAPI.Controllers.CalculatorProfileController.Put(System.String,System.String)">
+        <member name="M:calculatorRestAPI.Controllers.CalculatorProfileController.Put(calculatorRestAPI.Models.DTOs.CalculatorDTO)">
             <summary>
             Insert/Update calculator data belong to the given <code>userName</code>
             </summary>
-            <param name="userName"></param>
             <param name="jsonData">JSON string represents the data to save For example: {"paramA":"200","paramB":"300","result":"500","operator":"+"}</param>
         </member>
     </members>

@@ -5,7 +5,8 @@ namespace calculatorRestAPI.Models.DTOs
     [DataContract]
     public class CalculatorDTO
     {
-        public string UserID { get; set; }
+        [DataMember(Name = "userName")]
+        public string UserName { get; set; }
 
         [DataMember(Name = "paramA")]
         public string ParamA { get; set; }

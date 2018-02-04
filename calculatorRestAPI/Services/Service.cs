@@ -47,7 +47,7 @@ namespace calculatorRestAPI.Services
             Table table = Table.LoadTable(client, tableName);
 
             Document book = new Document();
-            book["UserID"] = data.UserID;
+            book["UserID"] = data.UserName;
             book["paramA"] = data.ParamA;
             book["paramB"] = data.ParamB;
             book["operator"] = data.Operator;
