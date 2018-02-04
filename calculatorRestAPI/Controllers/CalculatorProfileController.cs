@@ -8,13 +8,23 @@ namespace calculatorRestAPI.Controllers
 {
     public class CalculatorProfileController : ApiController
     {
+        /// <summary>
+        /// Get calculator data for given <code>userName</code>
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         // GET api/calculatorprofile
-        public string Get( string userName )
+        public CalculatorDTO Get( string userName )
         {
            CalculatorDTO result = Service.getService().getCalculatorData(userName);
-            return JsonConvert.SerializeObject(result);
+            return result;
         }
 
+        /// <summary>
+        /// Insert/Update calculator data belong to the given <code>userName</code>
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="jsonData">JSON string represents the data to save For example: {"paramA":"200","paramB":"300","result":"500","operator":"+"}</param>
         // PUT api/calculatorprofile
         public void Put( string userName, [FromBody]string jsonData)
         {
