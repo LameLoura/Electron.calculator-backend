@@ -1,10 +1,8 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
-using calculatorRestAPI.Services.Entities;
-using System;
+using calculatorRestAPI.Models.DTOs;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace calculatorRestAPI.Services
 {
@@ -33,15 +31,29 @@ namespace calculatorRestAPI.Services
             CalculatorDTO answer = new CalculatorDTO();
             Search search = table.Query(filter);
             List<Document> queryResult = search.GetNextSet();
-            if(queryResult.Count > 0 && queryResult[0] != null )
+            if(queryResult.Count > 0 && queryResult.FirstOrDefault() != null )
             {
-                Document output = queryResult[0];
+                Document output = queryResult.FirstOrDefault();
                 answer.ParamA = output["paramA"];
                 answer.ParamB = output["paramB"];
                 answer.Operator = output["operator"];
-                answer.Result = output["paramA"];
+                answer.Result = output["result"];
             }
             return answer;
+        }
+
+        public void saveCalculatorData(CalculatorDTO data)
+        {
+            Table table = Table.LoadTable(client, tableName);
+
+            Document book = new Document();
+            book["UserID"] = data.UserName;
+            book["paramA"] = data.ParamA;
+            book["paramB"] = data.ParamB;
+            book["operator"] = data.Operator;
+            book["result"] = data.Result;
+
+            table.PutItem(book);
         }
 
     }
